@@ -1,0 +1,856 @@
+/* =========================================
+   GENERAL
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family:
+        "Trebuchet MS",
+        Arial,
+        sans-serif;
+
+    color: #29232b;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255,255,255,0.8),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(255,255,255,0.5),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            #f8f2f8,
+            #e9dfea
+        );
+
+     /* Fondo de la página */
+    background-image: url("imagenes/fondo.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================
+   MARCO DECORATIVO
+========================================= */
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    inset: 15px;
+
+    border: 2px solid rgba(41, 35, 43, 0.15);
+
+    border-radius: 25px;
+
+    pointer-events: none;
+
+    /* El marco queda por encima */
+    z-index: 100;
+}
+/* =========================================
+   TÍTULO
+========================================= */
+
+.titulo-juego {
+    text-align: center;
+
+    margin-bottom: 35px;
+}
+
+.titulo-juego .etiqueta {
+    display: inline-block;
+
+    padding: 7px 18px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(41,35,43,0.08);
+
+    border:
+        1px solid rgba(41,35,43,0.15);
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 15px;
+}
+
+.titulo-juego h1 {
+    font-size: 42px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 10px;
+}
+
+.titulo-juego p {
+    opacity: 0.7;
+
+    font-size: 17px;
+}
+
+
+/* =========================================
+   JUEGO CAMINO
+========================================= */
+
+.juego {
+    min-height: 100vh;
+
+    padding: 60px 50px;
+}
+
+
+/* =========================================
+   ZONA JUEGO
+========================================= */
+
+.zona-juego {
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        300px
+        1fr;
+
+    gap: 60px;
+
+    align-items: center;
+}
+
+
+/* =========================================
+   INSTRUCCIONES
+========================================= */
+
+.instrucciones {
+    padding: 30px;
+
+    background:
+        rgba(255,255,255,0.75);
+
+    border:
+        2px solid rgba(41,35,43,0.12);
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 15px 40px rgba(41,35,43,0.12);
+}
+
+.instrucciones h2 {
+    font-size: 23px;
+
+    margin-bottom: 15px;
+
+    letter-spacing: 2px;
+}
+
+.ayuda {
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    margin-bottom: 25px;
+
+    opacity: 0.7;
+}
+
+
+/* =========================================
+   MOVIMIENTOS
+========================================= */
+
+.movimiento {
+    display: grid;
+
+    grid-template-columns:
+        35px
+        40px
+        1fr;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px;
+
+    margin-bottom: 7px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(41,35,43,0.05);
+}
+
+.numero-movimiento {
+    width: 30px;
+
+    height: 30px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 50%;
+
+    background: #29232b;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+.flecha {
+    font-size: 25px;
+
+    font-weight: bold;
+
+    text-align: center;
+}
+
+.movimiento span:last-child {
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================
+   AVISO
+========================================= */
+
+.aviso {
+    margin-top: 25px;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(240,200,200,0.5);
+
+    border:
+        1px solid rgba(150,50,50,0.15);
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+.aviso strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   TABLERO
+========================================= */
+
+.tablero-container {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+/* =========================================
+   ESTADO
+========================================= */
+
+.estado {
+    display: flex;
+
+    gap: 15px;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+
+    padding: 10px 20px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(255,255,255,0.7);
+
+    border:
+        1px solid rgba(41,35,43,0.12);
+
+    font-size: 13px;
+}
+
+.estado span {
+    opacity: 0.6;
+}
+
+.estado strong {
+    letter-spacing: 1px;
+}
+
+
+/* =========================================
+   TABLERO
+========================================= */
+
+.tablero {
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, 65px);
+
+    grid-template-rows:
+        repeat(6, 65px);
+
+    gap: 8px;
+
+    padding: 15px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(41,35,43,0.08);
+
+    box-shadow:
+        0 20px 45px rgba(41,35,43,0.15);
+}
+
+
+/* =========================================
+   BALDOSAS
+========================================= */
+
+.baldosa {
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #e5dce7
+        );
+
+    border:
+        2px solid rgba(41,35,43,0.12);
+
+    box-shadow:
+        0 5px 10px rgba(41,35,43,0.1);
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.baldosa:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 10px 18px rgba(41,35,43,0.18);
+}
+
+
+/* =========================================
+   JUGADOR
+========================================= */
+
+.baldosa.jugador {
+    background: #29232b;
+
+    color: white;
+
+    transform: scale(1.08);
+
+    box-shadow:
+        0 8px 20px rgba(41,35,43,0.3);
+}
+
+
+/* =========================================
+   INICIO
+========================================= */
+
+.baldosa.inicio {
+    background:
+        linear-gradient(
+            145deg,
+            #d8c6dc,
+            #b99fc0
+        );
+}
+
+
+/* =========================================
+   META
+========================================= */
+
+.baldosa.meta {
+    background:
+        linear-gradient(
+            145deg,
+            #f8e5a8,
+            #d8bd69
+        );
+
+    font-size: 27px;
+}
+
+
+/* =========================================
+   MENSAJES
+========================================= */
+
+.mensaje {
+    margin-top: 20px;
+
+    min-height: 45px;
+
+    padding: 12px 20px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,0.7);
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+.mensaje.correcto {
+    background:
+        rgba(190,230,190,0.7);
+}
+
+.mensaje.error {
+    background:
+        rgba(240,190,190,0.7);
+
+    animation:
+        sacudir 0.4s ease;
+}
+
+
+/* =========================================
+   BOTÓN FINAL
+========================================= */
+
+.boton-final-container {
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 40px;
+}
+
+.boton-siguiente {
+    display: inline-block;
+
+    padding: 15px 35px;
+
+    border-radius: 12px;
+
+    background: #29232b;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    box-shadow:
+        0 8px 20px rgba(41,35,43,0.2);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.boton-siguiente:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 13px 25px rgba(41,35,43,0.3);
+}
+
+
+/* =========================================
+   OPERACIONES
+========================================= */
+
+.operaciones-pagina {
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 40px;
+}
+
+
+/* =========================================
+   TARJETA
+========================================= */
+
+.operacion-card {
+    width: 100%;
+
+    max-width: 550px;
+
+    padding: 50px;
+
+    text-align: center;
+
+    background:
+        rgba(255,255,255,0.82);
+
+    border:
+        2px solid rgba(41,35,43,0.12);
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 20px 50px rgba(41,35,43,0.15);
+
+    animation:
+        aparecer 0.7s ease;
+}
+
+
+/* =========================================
+   NÚMERO OPERACIÓN
+========================================= */
+
+.numero-operacion {
+    display: inline-block;
+
+    padding: 8px 18px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(41,35,43,0.08);
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 35px;
+}
+
+
+/* =========================================
+   OPERACIÓN
+========================================= */
+
+.operacion {
+    font-size: 55px;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 25px;
+}
+
+.pregunta-operacion {
+    font-size: 17px;
+
+    opacity: 0.7;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================================
+   OPCIONES
+========================================= */
+
+.opciones-operacion {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+}
+
+
+/* =========================================
+   BOTONES RESPUESTA
+========================================= */
+
+.respuesta-operacion {
+    padding: 18px;
+
+    border:
+        2px solid rgba(41,35,43,0.15);
+
+    border-radius: 13px;
+
+    background: white;
+
+    color: #29232b;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.respuesta-operacion:hover {
+    transform: translateY(-5px);
+
+    background: #29232b;
+
+    color: white;
+
+    box-shadow:
+        0 10px 20px rgba(41,35,43,0.2);
+}
+
+.respuesta-operacion:disabled {
+    cursor: default;
+
+    opacity: 0.5;
+}
+
+
+/* =========================================
+   RESULTADO
+========================================= */
+
+.resultado {
+    margin-top: 30px;
+
+    min-height: 60px;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+}
+
+.correcto-operacion {
+    font-size: 24px;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+.incorrecto-operacion {
+    font-size: 24px;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+
+/* =========================================
+   ANIMACIONES
+========================================= */
+
+@keyframes aparecer {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+
+}
+
+
+@keyframes sacudir {
+
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-8px);
+    }
+
+    50% {
+        transform: translateX(8px);
+    }
+
+    75% {
+        transform: translateX(-5px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 900px) {
+
+    .zona-juego {
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+    }
+
+    .instrucciones {
+        max-width: 500px;
+
+        margin: 0 auto;
+
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    body::before {
+        inset: 8px;
+
+        border-radius: 18px;
+    }
+
+
+    .juego {
+        padding: 40px 25px;
+    }
+
+
+    .titulo-juego h1 {
+        font-size: 30px;
+    }
+
+
+    .titulo-juego p {
+        font-size: 14px;
+    }
+
+
+    .tablero {
+        grid-template-columns:
+            repeat(6, 42px);
+
+        grid-template-rows:
+            repeat(6, 42px);
+
+        gap: 5px;
+
+        padding: 10px;
+    }
+
+
+    .baldosa {
+        border-radius: 7px;
+
+        font-size: 15px;
+    }
+
+
+    .operaciones-pagina {
+        padding: 30px 20px;
+    }
+
+
+    .operacion-card {
+        padding: 35px 20px;
+    }
+
+
+    .operacion {
+        font-size: 42px;
+    }
+
+
+    .opciones-operacion {
+        grid-template-columns: 1fr;
+    }
+
+
+    .respuesta-operacion {
+        padding: 15px;
+    }
+
+}
+
+.imagen-cuenta {
+    width: 250px;
+    height: auto;
+}

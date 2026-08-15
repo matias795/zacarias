@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Un regalo</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         PANTALLA DE INICIO
+    ========================== -->
+
+    <main class="pantalla inicio" id="inicio">
+
+        <h1>UN PEQUEÑO REGALO</h1>
+
+        <p>
+            Bueno, técnicamente esto es un regalo. Pero también es una pequeña prueba para ver cuánto se conocen realmente. Van a tener que responder preguntas sobre la otra, recordar detalles y confiar en lo que creen saber. No es una competencia… pero al final vamos a descubrir quién conoce mejor a quién. Y si hay empate, podemos fingir que estaba planeado.
+        </p>
+
+        <button
+            class="boton"
+            onclick="mostrarCartas()">
+            Empezar el juego
+        </button>
+
+    </main>
+
+
+    <!-- =========================
+         ELECCIÓN DE PERSONAJE
+    ========================== -->
+
+    <main
+        class="pantalla eleccion"
+        id="eleccion">
+
+        <h1>Elegir su personaje</h1>
+
+        <p class="subtitulo">
+            Cada una debe elegir su carta
+        </p>
+
+        <div class="cartas">
+
+            <!-- CARTA 1 -->
+
+            <a href="pregunta1.html">
+
+                <img
+                    src="imagenes/ximena2.png"
+                    alt="Carta número 1"
+                    class="carta">
+
+            </a>
+
+
+            <!-- CARTA 2 -->
+
+            <a href="respuestas1.html">
+
+                <img
+                    src="imagenes/ariana1.png"
+                    alt="Carta número 2"
+                    class="carta">
+
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        function mostrarCartas() {
+
+            document.getElementById("inicio").style.display = "none";
+
+            document.getElementById("eleccion").style.display = "flex";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>El Camino Misterioso</title>
+
+    <link rel="stylesheet" href="juego.css">
+
+</head>
+
+<body>
+
+    <main class="juego">
+
+        <!-- =================================
+             TÍTULO
+        ================================== -->
+
+        <header class="titulo-juego">
+
+            <div class="etiqueta">
+                JUEGO 2
+            </div>
+
+            <h1>
+                EL CAMINO MISTERIOSO
+            </h1>
+
+            <p>
+                Seguí las instrucciones y encontrá el camino correcto.
+            </p>
+
+        </header>
+
+
+        <!-- =================================
+             CONTENIDO
+        ================================== -->
+
+        <section class="zona-juego">
+
+
+            <!-- =================================
+                 INSTRUCCIONES
+            ================================== -->
+
+            <aside class="instrucciones">
+
+                <h2>
+                    INSTRUCCIONES
+                </h2>
+
+                <p class="ayuda">
+                    Tu compañera resolverá las operaciones.
+                    El resultado te indicará hacia dónde moverte.
+                </p>
+
+
+                <div class="movimiento">
+
+                    <span class="numero-movimiento">
+                        1
+                    </span>
+
+                    <span class="flecha">
+                        ↑
+                    </span>
+
+                    <span>
+                        ARRIBA
+                    </span>
+
+                </div>
+
+
+                <div class="movimiento">
+
+                    <span class="numero-movimiento">
+                        2
+                    </span>
+
+                    <span class="flecha">
+                        →
+                    </span>
+
+                    <span>
+                        DERECHA
+                    </span>
+
+                </div>
+
+
+                <div class="movimiento">
+
+                    <span class="numero-movimiento">
+                        3
+                    </span>
+
+                    <span class="flecha">
+                        ↓
+                    </span>
+
+                    <span>
+                        ABAJO
+                    </span>
+
+                </div>
+
+
+                <div class="movimiento">
+
+                    <span class="numero-movimiento">
+                        4
+                    </span>
+
+                    <span class="flecha">
+                        ←
+                    </span>
+
+                    <span>
+                        IZQUIERDA
+                    </span>
+
+                </div>
+
+
+                <div class="movimiento">
+
+                    <span class="numero-movimiento">
+                        5
+                    </span>
+
+                    <span class="flecha">
+                        ↑
+                    </span>
+
+                    <span>
+                        ARRIBA ×2
+                    </span>
+
+                </div>
+
+
+                <div class="movimiento">
+
+                    <span class="numero-movimiento">
+                        6
+                    </span>
+
+                    <span class="flecha">
+                        →
+                    </span>
+
+                    <span>
+                        DERECHA ×2
+                    </span>
+
+                </div>
+
+
+                <div class="movimiento">
+
+                    <span class="numero-movimiento">
+                        7
+                    </span>
+
+                    <span class="flecha">
+                        ↓
+                    </span>
+
+                    <span>
+                        ABAJO ×2
+                    </span>
+
+                </div>
+
+
+                <div class="movimiento">
+
+                    <span class="numero-movimiento">
+                        8
+                    </span>
+
+                    <span class="flecha">
+                        ←
+                    </span>
+
+                    <span>
+                        IZQUIERDA ×2
+                    </span>
+
+                </div>
+
+
+                <div class="aviso">
+
+                    <strong>
+                        IMPORTANTE
+                    </strong>
+
+                    <p>
+                        Si elegís una baldosa incorrecta,
+                        tendrás que empezar nuevamente.
+                    </p>
+
+                </div>
+
+            </aside>
+
+
+            <!-- =================================
+                 TABLERO
+            ================================== -->
+
+            <section class="tablero-container">
+
+                <div class="estado">
+
+                    <span>
+                        POSICIÓN
+                    </span>
+
+                    <strong id="posicion">
+                        INICIO
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="tablero"
+                    id="tablero">
+
+                    <!--
+                        LAS BALDOSAS SE GENERAN
+                        AUTOMÁTICAMENTE CON JAVASCRIPT
+                    -->
+
+                </div>
+
+
+                <div
+                    class="mensaje"
+                    id="mensaje">
+
+                    Esperá la respuesta de tu compañera.
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        /*
+        ========================================
+        CONFIGURACIÓN DEL MAPA
+        ========================================
+
+        0 = baldosa incorrecta
+        1 = camino correcto
+
+        El mapa es de 6 x 6.
+        */
+
+        const mapa = [
+
+            [0, 0, 1, 0, 0, 0],
+
+            [0, 0, 1, 1, 1, 0],
+
+            [0, 0, 0, 0, 1, 0],
+
+            [0, 1, 1, 1, 1, 0],
+
+            [0, 1, 0, 0, 0, 0],
+
+            [0, 1, 1, 1, 1, 1]
+
+        ];
+
+
+        /*
+        ========================================
+        POSICIONES
+        ========================================
+        */
+
+        let fila = 0;
+
+        let columna = 2;
+
+
+        /*
+        ========================================
+        META
+        ========================================
+        */
+
+        const metaFila = 5;
+
+        const metaColumna = 5;
+
+
+        /*
+        ========================================
+        CREAR TABLERO
+        ========================================
+        */
+
+        const tablero =
+            document.getElementById("tablero");
+
+
+        for (
+            let i = 0;
+            i < mapa.length;
+            i++
+        ) {
+
+            for (
+                let j = 0;
+                j < mapa[i].length;
+                j++
+            ) {
+
+                const baldosa =
+                    document.createElement("button");
+
+
+                baldosa.classList.add("baldosa");
+
+
+                baldosa.dataset.fila = i;
+
+                baldosa.dataset.columna = j;
+
+
+                /*
+                La baldosa solamente
+                responde cuando la toca.
+                */
+
+                baldosa.addEventListener(
+                    "click",
+                    function () {
+
+                        mover(i, j);
+
+                    }
+                );
+
+
+                /*
+                INICIO
+                */
+
+                if (
+                    i === 0 &&
+                    j === 2
+                ) {
+
+                    baldosa.classList.add("inicio");
+
+                    baldosa.innerHTML = "★";
+
+                }
+
+
+                /*
+                META
+                */
+
+                if (
+                    i === metaFila &&
+                    j === metaColumna
+                ) {
+
+                    baldosa.classList.add("meta");
+
+                    baldosa.innerHTML = "🏁";
+
+                }
+
+
+                tablero.appendChild(baldosa);
+
+            }
+
+        }
+
+
+        /*
+        ========================================
+        FUNCIÓN PARA MOVERSE
+        ========================================
+        */
+
+        function mover(nuevaFila, nuevaColumna) {
+
+            /*
+            Solo se permite moverse
+            una casilla a la vez.
+            */
+
+            const distanciaFila =
+                Math.abs(nuevaFila - fila);
+
+            const distanciaColumna =
+                Math.abs(nuevaColumna - columna);
+
+
+            if (
+                distanciaFila +
+                distanciaColumna !== 1
+            ) {
+
+                mostrarMensaje(
+                    "Tenés que moverte a una casilla vecina.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /*
+            Comprobar si la baldosa
+            pertenece al camino.
+            */
+
+            if (
+                mapa[nuevaFila][nuevaColumna] === 0
+            ) {
+
+                reiniciarCamino();
+
+                return;
+
+            }
+
+
+            /*
+            Movimiento correcto
+            */
+
+            fila = nuevaFila;
+
+            columna = nuevaColumna;
+
+
+            actualizarPosicion();
+
+            marcarPosicion();
+
+
+            mostrarMensaje(
+                "¡Correcto! Seguí preguntando la próxima dirección.",
+                "correcto"
+            );
+
+
+            /*
+            Comprobar meta
+            */
+
+            if (
+                fila === metaFila &&
+                columna === metaColumna
+            ) {
+
+                setTimeout(
+                    function () {
+
+                        window.location.href =
+                            "camino-final.html";
+
+                    },
+                    800
+                );
+
+            }
+
+        }
+
+
+        /*
+        ========================================
+        REINICIAR CAMINO
+        ========================================
+        */
+
+        function reiniciarCamino() {
+
+            fila = 0;
+
+            columna = 2;
+
+
+            actualizarPosicion();
+
+            marcarPosicion();
+
+
+            mostrarMensaje(
+                "¡Te equivocaste! Volviste al inicio.",
+                "error"
+            );
+
+        }
+
+
+        /*
+        ========================================
+        ACTUALIZAR POSICIÓN
+        ========================================
+        */
+
+        function actualizarPosicion() {
+
+            document.getElementById(
+                "posicion"
+            ).textContent =
+                `${fila + 1} - ${columna + 1}`;
+
+        }
+
+
+        /*
+        ========================================
+        MARCAR JUGADOR
+        ========================================
+        */
+
+        function marcarPosicion() {
+
+            const baldosas =
+                document.querySelectorAll(
+                    ".baldosa"
+                );
+
+
+            baldosas.forEach(
+                function (baldosa) {
+
+                    baldosa.classList.remove(
+                        "jugador"
+                    );
+
+                }
+            );
+
+
+            const actual =
+                document.querySelector(
+                    `[data-fila="${fila}"][data-columna="${columna}"]`
+                );
+
+
+            if (actual) {
+
+                actual.classList.add(
+                    "jugador"
+                );
+
+            }
+
+        }
+
+
+        /*
+        ========================================
+        MENSAJES
+        ========================================
+        */
+
+        function mostrarMensaje(
+            texto,
+            tipo
+        ) {
+
+            const mensaje =
+                document.getElementById(
+                    "mensaje"
+                );
+
+
+            mensaje.textContent =
+                texto;
+
+
+            mensaje.className =
+                "mensaje " + tipo;
+
+        }
+
+
+        /*
+        POSICIÓN INICIAL
+        */
+
+        actualizarPosicion();
+
+        marcarPosicion();
+
+    </script>
+
+</body>
+
+</html>

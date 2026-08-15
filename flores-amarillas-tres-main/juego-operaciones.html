@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Las Operaciones</title>
+
+    <link rel="stylesheet" href="juego.css">
+
+</head>
+
+<body>
+
+    <main class="operaciones-pagina">
+
+
+        <!-- =================================
+             TÍTULO
+        ================================== -->
+
+        <header class="titulo-juego">
+
+            <div class="etiqueta">
+                JUEGO 2
+            </div>
+
+            <h1>
+                RESOLVÉ LAS OPERACIONES
+            </h1>
+
+            <p>
+                Decile el resultado a tu compañera.
+            </p>
+
+        </header>
+
+
+        <!-- =================================
+             TARJETA DE OPERACIONES
+        ================================== -->
+
+        <section class="operacion-card">
+
+            <div
+                class="numero-operacion"
+                id="numeroOperacion">
+
+                OPERACIÓN 1 DE 8
+
+            </div>
+
+
+            <div
+                class="operacion"
+                id="operacion">
+
+                8 - 7
+
+            </div>
+
+
+            <p class="pregunta-operacion">
+
+                ¿Cuál es el resultado?
+
+            </p>
+
+
+            <!-- OPCIONES -->
+
+            <div
+                class="opciones-operacion"
+                id="opciones">
+
+            </div>
+
+
+            <!-- RESULTADO -->
+
+            <div
+                class="resultado"
+                id="resultado">
+
+            </div>
+
+
+            <!-- =================================
+                 BOTÓN SIGUIENTE
+                 
+                 ESTÁ OCULTO AL PRINCIPIO
+            ================================== -->
+
+            <a
+                href="flower.html"
+                class="boton-siguiente"
+                id="botonSiguiente">
+
+                SIGUIENTE
+
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        /*
+        ========================================
+        OPERACIONES
+        ========================================
+        */
+
+        const operaciones = [
+            {
+                cuenta: "6 + 8 ÷ 4 - 5",
+                correcta: 3,
+                opciones: [4, 3, 5]
+            },
+
+            {
+                cuenta: "12 - 3 × 2",
+                correcta: 6,
+                opciones: [6, 5, 7]
+            },
+
+            {
+                cuenta: "20 ÷ 4 + 3 - 1",
+                correcta: 7,
+                opciones: [8, 7, 6]
+            },
+
+            {
+                cuenta: "18 ÷ 3 + 2 - 4",
+                correcta: 4,
+                opciones: [6, 8, 4]
+            },
+
+            {
+                cuenta: "5 × 2 - 4 ÷ 2",
+                correcta: 8,
+                opciones: [6, 8, 7]
+            },
+
+            {
+                cuenta: "24 ÷ 6 + 5 - 2",
+                correcta: 7,
+                opciones: [4, 6, 7]
+            },
+
+            {
+                cuenta: "3 × 4 - 10 ÷ 2 - 1",
+                correcta: 6,
+                opciones: [6, 8, 4]
+            },
+
+            {
+                cuenta: "16 ÷ 4 + 3 - 1",
+                correcta: 6,
+                opciones: [4, 6, 8]
+            }
+
+        ];
+
+
+        /*
+        ========================================
+        OPERACIÓN ACTUAL
+        ========================================
+        */
+
+        let numeroActual = 0;
+
+
+        /*
+        ========================================
+        ELEMENTOS HTML
+        ========================================
+        */
+
+        const numeroOperacion =
+            document.getElementById(
+                "numeroOperacion"
+            );
+
+
+        const operacion =
+            document.getElementById(
+                "operacion"
+            );
+
+
+        const opciones =
+            document.getElementById(
+                "opciones"
+            );
+
+
+        const resultado =
+            document.getElementById(
+                "resultado"
+            );
+
+
+        const botonSiguiente =
+            document.getElementById(
+                "botonSiguiente"
+            );
+
+
+        /*
+        ========================================
+        OCULTAR BOTÓN AL INICIO
+        ========================================
+        */
+
+        botonSiguiente.style.display = "none";
+
+
+        /*
+        ========================================
+        MOSTRAR OPERACIÓN
+        ========================================
+        */
+
+        function mostrarOperacion() {
+
+            const actual =
+                operaciones[numeroActual];
+
+
+            numeroOperacion.textContent =
+                `OPERACIÓN ${numeroActual + 1} DE ${operaciones.length}`;
+
+
+            operacion.textContent =
+                actual.cuenta;
+
+
+            opciones.innerHTML = "";
+
+
+            resultado.innerHTML = "";
+
+
+            /*
+            Ocultar botón mientras
+            se resuelven operaciones.
+            */
+
+            botonSiguiente.style.display =
+                "none";
+
+
+            /*
+            Crear las opciones
+            */
+
+            actual.opciones.forEach(
+                function (numero) {
+
+                    const boton =
+                        document.createElement(
+                            "button"
+                        );
+
+
+                    boton.classList.add(
+                        "respuesta-operacion"
+                    );
+
+
+                    boton.textContent =
+                        numero;
+
+
+                    boton.addEventListener(
+                        "click",
+                        function () {
+
+                            comprobar(
+                                numero
+                            );
+
+                        }
+                    );
+
+
+                    opciones.appendChild(
+                        boton
+                    );
+
+                }
+            );
+
+        }
+
+
+        /*
+        ========================================
+        COMPROBAR RESPUESTA
+        ========================================
+        */
+
+        function comprobar(
+            respuesta
+        ) {
+
+            const actual =
+                operaciones[numeroActual];
+
+
+            /*
+            ====================================
+            RESPUESTA CORRECTA
+            ====================================
+            */
+
+            if (
+                respuesta ===
+                actual.correcta
+            ) {
+
+                resultado.innerHTML = `
+
+                    <div class="correcto-operacion">
+
+                        ✓ CORRECTO
+
+                    </div>
+
+                    <p>
+
+                        El resultado es
+
+                        <strong>
+                            ${actual.correcta}
+                        </strong>.
+
+                    </p>
+
+                    <p>
+
+                        Decile este número
+                        a tu compañera.
+
+                    </p>
+
+                `;
+
+
+                /*
+                Bloquear botones
+                */
+
+                bloquearOpciones();
+
+
+                /*
+                =================================
+                ¿ES LA ÚLTIMA OPERACIÓN?
+                =================================
+                */
+
+                if (
+                    numeroActual ===
+                    operaciones.length - 1
+                ) {
+
+                    /*
+                    TERMINARON LAS 8
+                    */
+
+                    resultado.innerHTML = `
+
+                        <div class="correcto-operacion">
+
+                            ✓ ¡TERMINARON!
+
+                        </div>
+
+                        <p>
+
+                            Resolviste las
+                            8 operaciones correctamente.
+
+                        </p>
+
+                        <p>
+
+                            Ahora pueden continuar.
+
+                        </p>
+
+                    `;
+
+
+                    /*
+                    MOSTRAR BOTÓN
+                    */
+
+                    botonSiguiente.style.display =
+                        "inline-block";
+
+
+                    return;
+
+                }
+
+
+                /*
+                =================================
+                SIGUIENTE OPERACIÓN
+                =================================
+                */
+
+                setTimeout(
+                    function () {
+
+                        numeroActual++;
+
+                        mostrarOperacion();
+
+                    },
+                    3000
+                );
+
+
+            }
+
+            /*
+            ====================================
+            RESPUESTA INCORRECTA
+            ====================================
+            */
+
+            else {
+
+                resultado.innerHTML = `
+
+                    <div class="incorrecto-operacion">
+
+                        ✕ INCORRECTO
+
+                    </div>
+
+                    <p>
+
+                        Esa no es la respuesta.
+                        Probá nuevamente.
+
+                    </p>
+
+                `;
+
+            }
+
+        }
+
+
+        /*
+        ========================================
+        BLOQUEAR OPCIONES
+        ========================================
+        */
+
+        function bloquearOpciones() {
+
+            const botones =
+                document.querySelectorAll(
+                    ".respuesta-operacion"
+                );
+
+
+            botones.forEach(
+                function (boton) {
+
+                    boton.disabled = true;
+
+                }
+            );
+
+        }
+
+
+        /*
+        ========================================
+        INICIAR JUEGO
+        ========================================
+        */
+
+        mostrarOperacion();
+
+    </script>
+
+</body>
+
+</html>
